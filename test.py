@@ -2,7 +2,7 @@
 import indent_concluder
 from indent_concluder import Item
 
-indent_concluder.INDENT = 8  # You can edit the identity size
+indent_concluder.INDENT = 4  # You can edit the identity size
 
 
 def example():
