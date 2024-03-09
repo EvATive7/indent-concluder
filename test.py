@@ -3,6 +3,7 @@ import indent_concluder
 from indent_concluder import Item
 
 indent_concluder.INDENT = 4  # You can edit the identity size
+indent_concluder.SHOW_REASON_OF_FAILURE_FOR_NON_META_ITEM = True  # Default is False
 
 
 def example():
@@ -43,10 +44,12 @@ def example():
     for i in range(2):
         maintask = Task()
         maintask.name = f'task{i}'
+        maintask.reason = generate_random_string(12)
         maintask_ls.append(maintask)
         for j in range(5):
             subtask = Task()
             subtask.name = f'subtask{i}-{j}'
+            subtask.reason = generate_random_string(12)
             maintask.children.append(subtask)
             for k in range(3):
                 subsubtask = Task()

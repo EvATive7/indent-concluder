@@ -1,4 +1,5 @@
 INDENT = 4
+SHOW_REASON_OF_FAILURE_FOR_NON_META_ITEM = False
 
 
 class Item:
@@ -23,7 +24,7 @@ class Item:
             if meta:
                 self_str = '{}{} {}: {}'.format(indent_str, self.name, succeed_symbol, self.reason)
             else:
-                self_str = '{}{} {}: '.format(indent_str, self.name, succeed_symbol)
+                self_str = '{}{} {}: {}'.format(indent_str, self.name, succeed_symbol, '' if not SHOW_REASON_OF_FAILURE_FOR_NON_META_ITEM else self.reason)
 
             if not meta:
                 child_indent = indent + INDENT
