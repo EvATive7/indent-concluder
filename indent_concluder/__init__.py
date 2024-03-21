@@ -7,18 +7,19 @@ class Item:
     def __init__(self, name, succeed=False, reason='') -> None:
         self.name = name
         self._succeed = succeed
-        if not AUTO_CALC_SUCCEED:
-            self.succeed = succeed
         self.reason = reason
         self.children: list[Item] = []
 
-    if AUTO_CALC_SUCCEED:
-        @property
-        def succeed(self):
-            if not self.children:
-                return self._succeed
-            else:
-                return all([child.succeed for child in self.children])
+    @property
+    def succeed(self):
+        if AUTO_CALC_SUCCEED and self.children:
+            return all([child.succeed for child in self.children])
+        else:
+            return self._succeed
+
+    @succeed.setter
+    def succeed(self, value: bool):
+        self._succeed = value
 
     def __str__(self) -> str:
         return self._get_str(0)
