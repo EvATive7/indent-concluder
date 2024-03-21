@@ -5,10 +5,9 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="indent-concluder",
-    version="0.2",
+    version="1.0",
     author="EvATive7",
     author_email="",
-    description="A python library that uses indentation to generate neat summary reports.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/EvATive7/indent-concluder",

@@ -1,13 +1,24 @@
 INDENT = 4
 SHOW_REASON_OF_FAILURE_FOR_NON_META_ITEM = False
+AUTO_CALC_SUCCEED = True
 
 
 class Item:
-    def __init__(self, name, succeed, reason) -> None:
+    def __init__(self, name, succeed=False, reason='') -> None:
         self.name = name
-        self.succeed = succeed
+        self._succeed = succeed
+        if not AUTO_CALC_SUCCEED:
+            self.succeed = succeed
         self.reason = reason
         self.children: list[Item] = []
+
+    if AUTO_CALC_SUCCEED:
+        @property
+        def succeed(self):
+            if not self.children:
+                return self._succeed
+            else:
+                return all([child.succeed for child in self.children])
 
     def __str__(self) -> str:
         return self._get_str(0)
