@@ -17,6 +17,14 @@ class Item:
         else:
             return self._succeed
 
+    @property
+    def succeed_symbol(self):
+        return '√' if self.succeed else '×'
+
+    @property
+    def meta(self):
+        return not self.children
+
     @succeed.setter
     def succeed(self, value: bool):
         self._succeed = value
@@ -24,9 +32,35 @@ class Item:
     def __str__(self) -> str:
         return self._get_str(0)
 
+    def failed_markdown(self, succeed_symbol=False):
+        list_: list[str] = self._get_summaries(succeed_symbol=succeed_symbol)
+        list_ = [' - '+_s for _s in list_]
+        return '\n'.join(list_)
+
+    def _get_summaries(self, prefixs: list[str] = [], succeed_symbol: bool = False) -> list[str]:
+        def prefixed(item: Item, _prefixs: list[str]):
+            result = ''
+            for prefix in _prefixs:
+                result += f'[{prefix}]'
+            if succeed_symbol:
+                result += f' {item.succeed_symbol}: {item.reason}'
+            else:
+                result += f' {item.reason}'
+            return result
+
+        prefixs = prefixs + [self.name]
+        result = []
+        for child in self.children:
+            if child.meta:
+                if not child.succeed:
+                    result.append(prefixed(child, prefixs + [child.name]))
+            else:
+                result += child._get_summaries(succeed_symbol=succeed_symbol)
+        return result
+
     def _get_str(self, indent=0):
         succeed_symbol = '√' if self.succeed else '×'
-        meta = not self.children
+        meta = self.meta
 
         indent_str = ' ' * indent
 

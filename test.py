@@ -59,7 +59,7 @@ def example():
                 subsubtask.reason = generate_random_string(12)
                 subtask.children.append(subsubtask)
 
-    mainitem_ls = []
+    mainitem_ls: list[Item] = []
     for _maintask in maintask_ls:
         mainitem = Item(_maintask.name, _maintask.succeed, _maintask.reason)
         mainitem_ls.append(mainitem)
@@ -70,11 +70,9 @@ def example():
                 subsubitem = Item(_subsubtask.name, _subsubtask.succeed, _subsubtask.reason)
                 subitem.append(subsubitem)
 
-    result_dict = [t.dict() for t in maintask_ls]
-    result_strs = [str(item) for item in mainitem_ls]
-
-    for result_str in result_strs:
-        print(result_str)
+    for item in mainitem_ls:
+        #print(item.failed_markdown(succeed_symbol=False), end='\n\n')
+        print(str(item), end='\n\n')
 
 
 example()
