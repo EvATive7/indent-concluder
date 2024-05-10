@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="indent-concluder",
-    version="1.1.1",
+    version="1.1.2",
     author="EvATive7",
     author_email="",
     long_description=long_description,
