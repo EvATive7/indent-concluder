@@ -33,11 +33,11 @@ class Item:
         return self._get_str(0)
 
     def failed_markdown(self, succeed_symbol=False):
-        list_: list[str] = self._get_summaries(succeed_symbol=succeed_symbol)
+        list_: list[str] = self._get_summaries([], succeed_symbol=succeed_symbol)
         list_ = [' - '+_s for _s in list_]
         return '\n'.join(list_)
 
-    def _get_summaries(self, prefixs: list[str] = [], succeed_symbol: bool = False) -> list[str]:
+    def _get_summaries(self, prefixs: list[str], succeed_symbol: bool = False) -> list[str]:
         def prefixed(item: Item, _prefixs: list[str]):
             result = ''
             for prefix in _prefixs:
@@ -55,7 +55,7 @@ class Item:
                 if not child.succeed:
                     result.append(prefixed(child, prefixs + [child.name]))
             else:
-                result += child._get_summaries(succeed_symbol=succeed_symbol)
+                result += child._get_summaries(prefixs=prefixs, succeed_symbol=succeed_symbol)
         return result
 
     def _get_str(self, indent=0):
