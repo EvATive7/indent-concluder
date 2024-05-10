@@ -50,11 +50,11 @@ class Item:
 
         prefixs = prefixs + [self.name]
         result = []
-        for child in self.children:
-            if child.meta:
-                if not child.succeed:
-                    result.append(prefixed(child, prefixs + [child.name]))
-            else:
+        if self.meta:
+            if not self.succeed:
+                result.append(prefixed(self, prefixs))
+        else:
+            for child in self.children:
                 result += child._get_summaries(prefixs=prefixs, succeed_symbol=succeed_symbol)
         return result
 
